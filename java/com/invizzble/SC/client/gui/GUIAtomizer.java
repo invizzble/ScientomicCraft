@@ -1,4 +1,4 @@
-package com.invizzble.SC.client.interfaces;
+package com.invizzble.SC.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

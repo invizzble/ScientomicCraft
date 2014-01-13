@@ -1,19 +1,21 @@
 package com.invizzble.SC.tileEntities;
 
-import com.invizzble.SC.lib.BlockInfo;
-
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+
+import com.invizzble.SC.lib.BlockInfo;
 
 public class TileAtomizer extends TileEntity implements IInventory {
 
 	private ItemStack[] items;
 
 	public TileAtomizer() {
-		items = new ItemStack[4];
+		items = new ItemStack[3];
 	}
 
 	@Override
@@ -100,12 +102,43 @@ public class TileAtomizer extends TileEntity implements IInventory {
 
 	}
 
-	int[] allowedItems = new int[] { Item.redstone.itemID, Item.coal.itemID,
-			Item.diamond.itemID, Item.ingotGold.itemID, Item.ingotIron.itemID };
-
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		return itemstack.itemID == Item.coal.itemID;
+		return itemstack.itemID == Block.anvil.blockID? true: false;
 
+	}
+	
+	@Override
+	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		super.writeToNBT(par1nbtTagCompound);
+		NBTTagList items = new NBTTagList();
+		
+		for(int i = 0; i < getSizeInventory(); i++){
+			ItemStack stack = getStackInSlot(i);
+			
+			if(stack != null){
+				NBTTagCompound item = new NBTTagCompound();
+				item.setByte("Slot", (byte) i);
+				stack.writeToNBT(item);
+				items.appendTag(item);
+			}
+		}
+		par1nbtTagCompound.setTag("Items", items);
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
+		
+		super.readFromNBT(par1nbtTagCompound);
+		NBTTagList items = par1nbtTagCompound.getTagList("Items");
+		
+		for(int i = 0; i < items.tagCount(); i++){
+			NBTTagCompound item = (NBTTagCompound)items.tagAt(i);
+			int slot = item.getByte("Slot");
+			
+			if(slot >= 0 && slot < getSizeInventory()){
+				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
+			}
+		}
 	}
 }

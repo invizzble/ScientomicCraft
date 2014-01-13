@@ -1,7 +1,7 @@
 package com.invizzble.SC;
 
 import com.invizzble.SC.block.ModBlocks;
-import com.invizzble.SC.client.interfaces.GUIHandler;
+import com.invizzble.SC.client.gui.GUIHandler;
 import com.invizzble.SC.config.ConfigHandler;
 import com.invizzble.SC.creativeTabs.ModCreativeTabs;
 import com.invizzble.SC.item.ModItems;

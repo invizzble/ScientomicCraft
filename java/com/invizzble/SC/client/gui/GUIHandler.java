@@ -1,4 +1,4 @@
-package com.invizzble.SC.client.interfaces;
+package com.invizzble.SC.client.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
