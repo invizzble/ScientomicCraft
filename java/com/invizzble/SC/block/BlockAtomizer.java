@@ -16,7 +16,7 @@ public class BlockAtomizer extends SCBlockMachine {
 	
 	public BlockAtomizer() {
 		setBlockName("Atomizer");
-		setIcons(BlockInfo.ATOMIZER_TEXTURES[0], BlockInfo.ATOMIZER_TEXTURES[1]);
+		//setIcons(BlockInfo.ATOMIZER_TEXTURES[0], BlockInfo.ATOMIZER_TEXTURES[1]);
 	}
 	
 	@Override

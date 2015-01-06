@@ -25,19 +25,25 @@ public abstract class SCBlockMachine extends SCBlock{
 		setHardness(3F);
 	}
 	
-	public void setIcons(String _frontName, String _defaultName){
-		frontName = _frontName;
-		defaultName = _defaultName;
-	}
+//	public void setIcons(String _frontName, String _defaultName){
+//		frontName = _frontName;
+//		defaultName = _defaultName;
+//	}
+	
+//	@SideOnly(Side.CLIENT)
+//	@Override
+//	public void registerBlockIcons(IIconRegister p_149651_1_)
+//	{
+//		front= p_149651_1_.registerIcon(Info.MOD_ID+":"+frontName);
+//		defaultIcon = p_149651_1_.registerIcon(Info.MOD_ID+":"+defaultName);
+//	}
+//	
 	
 	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister p_149651_1_)
-	{
-		front= p_149651_1_.registerIcon(Info.MOD_ID+":"+frontName);
-		defaultIcon = p_149651_1_.registerIcon(Info.MOD_ID+":"+defaultName);
-	}
-	
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		front = iconRegister.registerIcon(String.format("%s", getUnwrappedUnlocalizedName(this.getUnlocalizedName()))+"_front");
+		defaultIcon = iconRegister.registerIcon(String.format("%s", getUnwrappedUnlocalizedName(this.getUnlocalizedName()))+"_default");
+	};
 	/**
 	 * Side: 
 	 * 		0:Top

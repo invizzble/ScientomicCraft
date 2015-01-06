@@ -16,19 +16,19 @@ public class ItemIngotCopper extends SCItem{
 	}
 
 	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player,
+			List list, boolean p_77624_4_) {
+	}
+
+	@Override
 	protected void onRightRelease(ItemStack itemstack, World world,
-			EntityPlayer player, int itemCount) {
-		
+			EntityPlayer player, int itemCount) {		
 	}
 
 	@Override
 	protected void onRightClick(ItemStack itemstack, World world,
 			EntityPlayer player) {
-	}
-	
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player,
-			List list, boolean p_77624_4_) {
+		
 	}
 
 }

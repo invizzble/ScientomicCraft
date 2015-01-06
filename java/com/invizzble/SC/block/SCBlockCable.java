@@ -15,7 +15,7 @@ import com.invizzble.SC.tileEntities.BaseTileEntityCable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class SCBlockCable extends SCBlockMachine {
+public abstract class SCBlockCable extends SCBlock {
 
 	public SCBlockCable() {
 		setBlockBounds(BlockInfo.CABLE_MIN_CONSTANT,
@@ -58,14 +58,6 @@ public abstract class SCBlockCable extends SCBlockMachine {
 				+ this.minZ, x + this.maxX, y + this.maxY, z + this.maxZ);
 	}
 
-//	@Override
-//	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
-//			int y, int z) {
-//
-//		return AxisAlignedBB.getBoundingBox(x + this.minX, y + this.minY, z
-//				+ this.minZ, x + this.maxX, y + this.maxY, z + this.maxZ);
-//	}
-
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisAlignedBB, List list, Entity entity) { 
 		BaseTileEntityCable cable = (BaseTileEntityCable) world.getTileEntity(x, y, z);
@@ -82,6 +74,10 @@ public abstract class SCBlockCable extends SCBlockMachine {
 		super.addCollisionBoxesToList(world, x, y, z, axisAlignedBB, list, entity);
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		
+	}
 	
 	@Override
 	public String getItemIconName() {
