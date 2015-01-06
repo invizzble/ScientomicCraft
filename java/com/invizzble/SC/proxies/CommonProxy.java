@@ -1,11 +1,5 @@
 package com.invizzble.SC.proxies;
 
-public class CommonProxy {
-
-	public void initRenderers() {
-	}
-
-	public void initSounds() {	
-	}
-
+public abstract class CommonProxy implements IProxy {
+	
 }

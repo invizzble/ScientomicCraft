@@ -1,17 +1,25 @@
 package com.invizzble.SC.proxies;
 
+import com.invizzble.SC.lib.BlockInfo;
+import com.invizzble.SC.render.TileEntityRenderCable;
+import com.invizzble.SC.tileEntities.TileEntityCableCopper;
+import com.invizzble.SC.tileEntities.TileEntityCableSilver;
+
+import cpw.mods.fml.client.registry.ClientRegistry;
+
 public class ClientProxy extends CommonProxy {
 	
 	@Override
-	public void initRenderers() {
-		//init the renderers
-		
+	public void registerProxies() {
+		registerSpecialRenders();
 	}
-
-	@Override
-	public void initSounds() {
-		//init the sounds
-		
+	
+	private void registerSpecialRenders(){
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableCopper.class, new TileEntityRenderCable(BlockInfo.CABLE_COPPER_COLORS[0], BlockInfo.CABLE_COPPER_COLORS[1], BlockInfo.CABLE_COPPER_COLORS[2]));
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCableSilver.class, new TileEntityRenderCable(BlockInfo.CABLE_SILVER_COLORS[0], BlockInfo.CABLE_SILVER_COLORS[1], BlockInfo.CABLE_SILVER_COLORS[2]));
 	}
-
+	
+	
+	
+	
 }

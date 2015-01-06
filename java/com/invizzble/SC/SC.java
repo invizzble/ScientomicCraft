@@ -1,15 +1,19 @@
 package com.invizzble.SC;
 
 import com.invizzble.SC.block.ModBlocks;
-import com.invizzble.SC.client.gui.GUIHandler;
-import com.invizzble.SC.config.ConfigHandler;
-import com.invizzble.SC.creativeTabs.ModCreativeTabs;
+import com.invizzble.SC.handler.ConfigurationHandler;
+import com.invizzble.SC.handler.FuelHandler;
+import com.invizzble.SC.handler.GUIHandler;
 import com.invizzble.SC.item.ModItems;
 import com.invizzble.SC.lib.Info;
 import com.invizzble.SC.network.PacketHandler;
 import com.invizzble.SC.proxies.CommonProxy;
+import com.invizzble.SC.recipes.ModRecipes;
 import com.invizzble.SC.recipes.ShapedRecipes;
+import com.invizzble.SC.tileEntities.ModTileEntities;
+import com.invizzble.SC.util.LogHelper;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,45 +21,30 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Info.MOD_ID , name=Info.MOD_NAME,version = Info.MOD_VERSION)
 
-@NetworkMod(channels = {Info.MOD_CHANNEL}, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+
 public class SC {
 	
 	/*
-	 * 
 	 * IDEAS:
-	 * -some kind of research?, no idea how
-	 * 
-	 * -Power System => check with what kind of block the cable is connected
-	 * 			if(isConnectedtoCable){
-	 * 				check that cable his connections
-	 * 			}else if(isConnectedToConsumer && isConnectedtoProducer){
-	 * 				while(!MaxPower of consumer full){
-	 * 				bool 
-	 * 				subtract power out of producer (method in interface)
-	 * 				add power to consumer(method in interface)
-	 * 				}
-	 * 			}if(
-	 * 				
+	 * -some kind of research?, no idea how => Check out how achievements work
 	 * 
 	 * -atomizer, electronizer, moleculizer, .. (need also better names)
 	 * 
-	 * -minecraft period system?
+	 * -minecraft periodic table?
 	 * 
-	 * TODO:
+	 * -Device that creates wormholes to teleport you through space and time (time is just changing the minecraft time)
 	 * 
-	 * -LEARN FURTHER THE VSWE COURSES
+	 * TODO: 
+	 * -Balance the power system
 	 * 
-	 * -inspect the minecraft code some more
-	 * 
-	 * -(study meta-data items in, so i finally now how to make them :p )
-	 * 
+	 * -Draw out the mod structure (what machines first, next tier, ..., tools, blocks, ores, items, recipes, ...)
 	 */
-
-	@SidedProxy(clientSide = "com.invizzble.SC.proxies.ClientProxy", serverSide = "com.invizzble.SC.proxies.CommonProxy")
+	
+	@SidedProxy(clientSide = Info.PROXY_CLIENT, serverSide = Info.PROXY_SERVER)
 	public static CommonProxy proxy;
 	
 	@Instance(Info.MOD_ID)
@@ -63,39 +52,42 @@ public class SC {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
-		//sets up the config file
-		ConfigHandler.init(event.getSuggestedConfigurationFile());
+		
+		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+		
+		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 		
 		//adds the Blocks
+		LogHelper.info("Registering Blocks");
 		ModBlocks.init();
 		
 		//adds the Items
+		LogHelper.info("Registering Items");
 		ModItems.init();
 		
-		proxy.initSounds();
-		proxy.initRenderers();
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event){
-		//registers the names of the Items
-		ModItems.addNames();
-		
-		//registers the names of the blocks
-		ModBlocks.addNames();
-		
 		//registers the tile entities
-		ModBlocks.registerTileEntities();
+		LogHelper.info("Registering TileEntities");
+		ModTileEntities.registerTileEntities();
 		
 		//registers the recipes for my mod's Items
 		ShapedRecipes.init();
+		ModRecipes.init();
 		
-		//registers the creativeTab(s) <- at this point there's only one buth there's room for expansion if i implement the different sciences
-		ModCreativeTabs.nameCreativeTabs();
+		//Registers the packethandler
+		PacketHandler.initPackets();
 		
 		//register the gui handler
 		new GUIHandler();
 		
+		//register fuelhandler
+		GameRegistry.registerFuelHandler(new FuelHandler());
+		
+		//do ProxyStuff
+		proxy.registerProxies();
 	}
 	
 	@EventHandler

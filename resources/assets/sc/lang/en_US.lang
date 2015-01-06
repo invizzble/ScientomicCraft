@@ -1,0 +1,15 @@
+#item name
+item.sc:Scipad.name=SciPad
+item.sc:CopperCable.name=Copper cable
+
+#CAUTION! NO SPACES IN THE UNLOCALIZED NAMES 
+
+#Block names
+tile.sc:ElectricFurnace.name=Electric Furnace
+tile.sc:Atomizer.name=Atomizer
+tile.sc:GeneratorMK1.name=Generator MK1
+tile.sc:SilverCable.name=Silver cable
+tile.sc:CopperCable.name=Copper cable
+
+#creative tabs
+itemGroup.sc=Scientomic Craft

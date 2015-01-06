@@ -1,15 +1,27 @@
 package com.invizzble.SC.network;
 
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
+import com.invizzble.SC.lib.Info;
 
-public class PacketHandler implements IPacketHandler{
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 
-	@Override
-	public void onPacketData(INetworkManager manager,Packet250CustomPayload packet, Player player) {
-		
+public class PacketHandler {
+	
+	public static SimpleNetworkWrapper net;
+	
+	public static void initPackets(){
+		net = NetworkRegistry.INSTANCE.newSimpleChannel(Info.MOD_CHANNEL);
+		registerMessage(SCPacket.class, SCMessage.class);
 	}
+	
+	static int nextPacketId = 0;
+	
+	private static void registerMessage(Class packet, Class message)
+	  {
+	    net.registerMessage(packet, message, nextPacketId, Side.CLIENT);
+	    net.registerMessage(packet, message, nextPacketId, Side.SERVER);
+	    nextPacketId++;
+	  }
 
 }

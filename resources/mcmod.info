@@ -1,0 +1,21 @@
+[
+{
+  "modid": "sc",
+  "name": "Scientomic Craft",
+  "description": "The mod where science is your toy!",
+  "version": "1.7.10-1.0",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "invizzble"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
