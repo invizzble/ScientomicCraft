@@ -12,6 +12,7 @@ import com.invizzble.SC.recipes.ModRecipes;
 import com.invizzble.SC.recipes.ShapedRecipes;
 import com.invizzble.SC.tileEntities.ModTileEntities;
 import com.invizzble.SC.util.LogHelper;
+import com.invizzble.SC.world.WorldGen;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -85,6 +86,9 @@ public class SC {
 		
 		//register fuelhandler
 		GameRegistry.registerFuelHandler(new FuelHandler());
+		
+		//regiser the oregenerator
+		GameRegistry.registerWorldGenerator((new WorldGen()), 1);
 		
 		//do ProxyStuff
 		proxy.registerProxies();

@@ -1,4 +1,4 @@
-package com.invizzble.SC.render;
+package com.invizzble.SC.client.renderer;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

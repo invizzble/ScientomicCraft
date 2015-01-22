@@ -6,6 +6,7 @@ public class BlockOreCopper extends SCBlock{
 
 	protected BlockOreCopper() {
 		super(Material.rock);
+		setBlockName("oreCopper");
 	}
 	
 	

@@ -13,6 +13,9 @@ public class EnergyGrid {
 	
 	public static void transportToSurrounding(World world, int x, int y, int z, ForgeDirection lastDirection, Energy energy){
 		ITransport currentTile = (ITransport)world.getTileEntity(x, y, z);
+		if(lastDirection == null){
+			lastDirection = ForgeDirection.UNKNOWN;
+		}
 		int sides = 0;
 		boolean[] canTransferTo = new boolean[6];
 		for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS){

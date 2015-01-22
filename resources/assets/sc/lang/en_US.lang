@@ -1,13 +1,25 @@
 #item name
-item.sc:Scipad.name=SciPad
-item.sc:CopperCable.name=Copper cable
+#item.sc:Scipad.name=SciPad
+
+#item.sc:ingotCopper.name=Copper ingot
+
+#WEIRD BUG WITH THE ABOVE
+
+item.ingotCopper.name=Copper ingot
+
+item.Scipad.name=sciPad
+
+#Temp fix
 
 #CAUTION! NO SPACES IN THE UNLOCALIZED NAMES 
 
 #Block names
+tile.sc:oreCopper.name=Copper ore
+
 tile.sc:ElectricFurnace.name=Electric Furnace
 tile.sc:Atomizer.name=Atomizer
 tile.sc:GeneratorMK1.name=Generator MK1
+
 tile.sc:SilverCable.name=Silver cable
 tile.sc:CopperCable.name=Copper cable
 

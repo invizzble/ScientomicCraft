@@ -1,9 +1,9 @@
 package com.invizzble.SC.block;
 
-import com.invizzble.SC.tileEntities.TileEntityElectricFurnace;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import com.invizzble.SC.tileEntities.TileEntityElectricFurnace;
 
 public class BlockElectricFurnace extends SCBlockMachine{
 	

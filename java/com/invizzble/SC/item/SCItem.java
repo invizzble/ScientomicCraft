@@ -20,20 +20,19 @@ public abstract class SCItem extends Item{
 		setCreativeTab(ModCreativeTabs.tabSC);
 	}
 	
-	@Override
-    public String getUnlocalizedName(){
-        return String.format("item.%s%s", Info.MOD_ID.toLowerCase() + ":", getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
-    }
-	
     protected String getUnwrappedUnlocalizedName(String unlocalizedName){
         return unlocalizedName.substring(unlocalizedName.indexOf(".") + 1);
     }
     
     @Override
+    public String getUnlocalizedName(){
+        return String.format("item.%s%s", Info.MOD_ID.toLowerCase() + ":", getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
+    }
+    
+    @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        itemIcon = iconRegister.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+    public void registerIcons(IIconRegister iconRegister){
+        itemIcon = iconRegister.registerIcon(getUnwrappedUnlocalizedName(this.getUnlocalizedName()));
     }
     
     @Override
