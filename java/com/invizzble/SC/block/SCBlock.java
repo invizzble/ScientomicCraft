@@ -25,11 +25,6 @@ public class SCBlock extends BlockContainer{
 		super(Material.iron);
 		setCreativeTab(ModCreativeTabs.tabSC);
 	}
-
-	@Override
-	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-		return null;
-	}
 	
 	@Override
     public String getUnlocalizedName()
@@ -48,4 +43,8 @@ public class SCBlock extends BlockContainer{
     {
         return unlocalizedName.substring(unlocalizedName.indexOf(".") + 1);
     }
+
+	public TileEntity createNewTileEntity(World wrold, int var2) {
+		return null;
+	}
 }

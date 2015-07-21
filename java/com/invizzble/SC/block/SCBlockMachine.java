@@ -48,7 +48,7 @@ public abstract class SCBlockMachine extends SCBlock{
 	
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		front = iconRegister.registerIcon(String.format("%s", getUnwrappedUnlocalizedName(this.getUnlocalizedName()))+"_front");
+		front = iconRegister.registerIcon(String.format("%s", getUnwrappedUnlocalizedName(this.getUnlocalizedName())));
 		defaultIcon = iconRegister.registerIcon(Info.MOD_ID+":machine_default");
 	};
 	

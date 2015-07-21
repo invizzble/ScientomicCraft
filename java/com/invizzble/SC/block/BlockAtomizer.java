@@ -15,8 +15,7 @@ public class BlockAtomizer extends SCBlockMachine {
 	EntityPlayer player;
 	
 	public BlockAtomizer() {
-		setBlockName("Atomizer");
-		//setIcons(BlockInfo.ATOMIZER_TEXTURES[0], BlockInfo.ATOMIZER_TEXTURES[1]);
+		setBlockName("atomizer");
 	}
 	
 	@Override
