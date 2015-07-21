@@ -10,6 +10,7 @@ import com.invizzble.SC.network.PacketHandler;
 import com.invizzble.SC.proxies.CommonProxy;
 import com.invizzble.SC.recipes.ModRecipes;
 import com.invizzble.SC.recipes.ShapedRecipes;
+import com.invizzble.SC.research.ModResearch;
 import com.invizzble.SC.tileEntities.ModTileEntities;
 import com.invizzble.SC.util.LogHelper;
 import com.invizzble.SC.world.WorldGen;
@@ -92,6 +93,9 @@ public class SC {
 		
 		//do ProxyStuff
 		proxy.registerProxies();
+		
+		//initialize the research stuff
+		ModResearch.init();
 	}
 	
 	@EventHandler
