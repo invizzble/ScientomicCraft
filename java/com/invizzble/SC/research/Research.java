@@ -17,10 +17,9 @@ public class Research {
 	
 	IIcon icon;
 	
-	Research[] required;
+	Research[] required = {};
 	
 	public Research(){
-		
 	}
 
 	public String getName() {

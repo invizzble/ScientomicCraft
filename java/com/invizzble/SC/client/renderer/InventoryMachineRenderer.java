@@ -47,7 +47,7 @@ public class InventoryMachineRenderer implements ISimpleBlockRenderingHandler{
 	    renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
 	    tessellator.draw();
 	    GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-	    System.out.println("meta "+metadata) ;
+	    //System.out.println("meta "+metadata) ;
 	}
 
 	@Override
