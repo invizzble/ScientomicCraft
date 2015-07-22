@@ -8,8 +8,7 @@ import net.minecraft.util.IIcon;
 
 public class PageResearch {
 	
-	String name;
-	
+	String name;	
 	IIcon icon;
 	
 	ArrayList<Research> researches;

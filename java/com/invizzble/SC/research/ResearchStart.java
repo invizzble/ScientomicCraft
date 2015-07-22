@@ -9,6 +9,8 @@ public class ResearchStart extends Research{
 		setDesciption("test");
 		setResearchPage(ModResearch.basic);
 		setIcon(ModItems.SciPad);
+		setDiscovered(true);
+		setCords(0, 0);
 	}
 
 }

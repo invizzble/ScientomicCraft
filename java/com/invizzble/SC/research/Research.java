@@ -11,6 +11,10 @@ public class Research {
 	
 	boolean discovered;
 	
+	//the x- and y-coordinate of the center of the achievement from the center of the page
+	int pageX;
+	int pageY;
+	
 	IIcon icon;
 	
 	Research[] required;
@@ -30,6 +34,10 @@ public class Research {
 	
 	public boolean isDiscovered() {
 		return discovered;
+	}
+	
+	public void setDiscovered(boolean discovered){
+		this.discovered = discovered;
 	}
 
 	public void discover(){
@@ -78,6 +86,27 @@ public class Research {
 	
 	public void setResearchPage(PageResearch page){
 		page.addResearchToList(this);
+	}
+
+	public int getPageX() {
+		return pageX;
+	}
+
+	public void setPageX(int pageX) {
+		this.pageX = pageX;
+	}
+
+	public int getPageY() {
+		return pageY;
+	}
+
+	public void setPageY(int pageY) {
+		this.pageY = pageY;
+	}
+	
+	public void setCords(int x, int y){
+		pageX = x;
+		pageY = y;
 	}
 
 }
