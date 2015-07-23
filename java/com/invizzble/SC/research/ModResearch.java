@@ -5,6 +5,7 @@ public class ModResearch {
 	public static PageResearchBasic basic;
 	
 	public static ResearchStart start;
+	public static ResearchTest test;
 	
 	public static void init(){
 		registerPages();
@@ -18,6 +19,7 @@ public class ModResearch {
 	
 	public static void registerResearches(){
 		start = new ResearchStart();
+		test = new ResearchTest();
 	}
 
 }

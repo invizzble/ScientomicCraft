@@ -1,10 +1,12 @@
 package com.invizzble.SC.client.interfaces;
 
+import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
@@ -52,12 +54,7 @@ public class GuiSciPad extends GuiScreen{
 	int tempMouseX;
 	int tempMouseY;
 	
-	boolean isClicked = false;
-	
-	
-	
-	//THe Width and height of the 'screen' with 20px (int 256 file)
-	
+	boolean isClicked = false;		
 	
 	public GuiSciPad() {
 		curPage = ModResearch.basic;
@@ -68,8 +65,11 @@ public class GuiSciPad extends GuiScreen{
 		super.drawScreen(mouseX, mouseY, p_73863_3_);
 		drawDefaultBackground();
 		drawPageBackground();
+		drawLines();
 		drawResearches(mouseX, mouseY);
 		drawSciPadOverlay();
+		drawHovering(mouseX, mouseY);
+		
 	}
 	
 	public void drawPageBackground(){
@@ -100,8 +100,8 @@ public class GuiSciPad extends GuiScreen{
 			int p_146273_3_, long p_146273_4_) {
 		super.mouseClickMove(x, y, p_146273_3_, p_146273_4_);
 		if(isClicked){
-			if(focusX + (tempMouseX - x) <= -5){
-				focusX = -4;
+			if(focusX + (tempMouseX - x) < -3){
+				focusX = -3;
 			}else if (focusX + (tempMouseX - x) > 139){
 				focusX = 139;
 			}else{
@@ -110,8 +110,8 @@ public class GuiSciPad extends GuiScreen{
 			tempMouseX = x;
 			if(focusY + (tempMouseY - y) <  -2){
 				focusY = -2;
-			}else if(focusY + (tempMouseY - y) > 75){
-				focusY = 75;
+			}else if(focusY + (tempMouseY - y) > 74){
+				focusY = 74;
 			}else{
 				focusY += (tempMouseY - y);
 			}
@@ -130,14 +130,12 @@ public class GuiSciPad extends GuiScreen{
 	}
 	
 	public void drawResearches(int mouseX, int mouseY){
-		int left ;
-		int right;
-		int sWidth;
-		int sHeight;
 		for(Research research: curPage.getResearchesList()){
 			GL11.glPushMatrix();
-			int x = this.x + scWidth/2 - (int)((focusX - 64 + research.getPageX() - 4) * pageScaleWidth);
-			int y = this.y + scHeight/2 - (int)((focusY - 32 + research.getPageY() - 4)* pageScaleHeight);
+			GL11.glDisable(GL11.GL_LIGHTING);
+
+			int x = this.x + scWidth/2 - (int)((focusX - 64 -research.getPageX() - 4) * pageScaleWidth);
+			int y = this.y + scHeight/2 - (int)((focusY - 32 - research.getPageY() - 4)* pageScaleHeight);
 			IIcon icon = research.getIcon();
 			if(research.isDiscovered()){
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -151,18 +149,7 @@ public class GuiSciPad extends GuiScreen{
 				drawTexturedModelRectFromIcon(x-(researchIconSide/2), y-(researchIconSide/2), icon, researchIconSide, researchIconSide);
 			}
 			
-			if((mouseX > (x-researchSide/2) && mouseX < (x-researchSide/2)+researchSide) && (mouseY > (y-researchSide/2) && mouseY < (y-researchSide/2)+researchSide)){
-				ArrayList<String> list = new ArrayList<String>();
-				if(research.canDiscover() || research.isDiscovered()){
-					list.add(research.getName());
-					list.add(research.getDesciption());
-				}else{
-					list.add("??");
-					list.add("????");
-				}
-				drawHoveringText(list, mouseX, mouseY, fontRendererObj);
-			}
-			
+			//Find way to draw the lines behind the
 			GL11.glPopMatrix();
 		}
 	}
@@ -175,6 +162,110 @@ public class GuiSciPad extends GuiScreen{
 		GL11.glScalef(scale, scale, 1.0F);
 		drawTexturedModalRect((int)((width - sciPadWidth)/(scale * 2)), (int)((height - sciPadHeight)/(scale * 2)), 0, 0, 256, 128);
 		GL11.glPopMatrix();
+	}
+	
+	public void drawHovering(int mouseX, int mouseY){
+		ArrayList<String> list = new ArrayList<String>();
+		for(Research research:curPage.getResearchesList()){
+			int x = this.x + scWidth/2 - (int)((focusX - 64 -research.getPageX() - 4) * pageScaleWidth);
+			int y = this.y + scHeight/2 - (int)((focusY - 32 - research.getPageY() - 4)* pageScaleHeight);
+			if((mouseX > (x-researchSide/2) && mouseX < (x-researchSide/2)+researchSide) && (mouseY > (y-researchSide/2) && mouseY < (y-researchSide/2)+researchSide)){
+				list.clear();
+				if(research.canDiscover() || research.isDiscovered()){
+					list.add(research.getName());
+					list.add(research.getDesciption());
+				}else{
+					list.add("??");
+					list.add("????");
+				}
+				drawHoveringText(list, mouseX, mouseY, fontRendererObj);
+			}
+		}
+	}
+	
+	public void drawLines(){
+		GL11.glPushMatrix();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		//FIX THIS!
+		for(Research research:curPage.getResearchesList()){
+			int x = this.x + scWidth/2 - (int)((focusX - 64 -research.getPageX() - 4) * pageScaleWidth);
+			int y = this.y + scHeight/2 - (int)((focusY - 32 - research.getPageY() - 4)* pageScaleHeight);
+			for(Research required:research.getRequiredResearch()){
+				int otherX = this.x + scWidth/2 - (int)((focusX - 64 -required.getPageX() - 4) * pageScaleWidth);
+				int otherY = this.y + scHeight/2 - (int)((focusY - 32 - required.getPageY() - 4)* pageScaleHeight);
+				if(otherX < this.x){
+					otherX = this.x;
+				}
+				if(x < this.x){
+					x = this.x;
+				}
+				
+				if(x > this.x + scWidth){
+					x = this.x+scWidth;
+				}
+				
+				if(otherX > this.x + scWidth){
+					otherX = this.x+scWidth;
+				}
+				
+				if(otherX < this.x){
+					otherX = this.x;
+				}
+				
+				if(otherY < this.y){
+					otherY = this.y;
+				}
+				
+				if(y < this.y){
+					y = this.y;
+				}
+				
+				if(otherY > this.y + scHeight){
+					otherY = this.y+scHeight;
+				}
+				
+				if(y > this.y+scHeight){
+					y = this.y+scHeight;
+				}
+				
+				if(otherY > y){
+					y+=researchSide/2;
+					otherY-=researchSide/2;
+				}else{
+					otherY+=researchSide/2;
+					y-=researchSide/2;
+				}
+				//color = (alpha)(red)(green)(blue)
+				int color = 0xFFD9D9D9;
+				if((otherY > this.y && y < this.y + scHeight)||(otherY < this.y + scHeight && y > this.y)){
+					drawHorizontalLine(x,otherX, y - 1, color);
+					drawHorizontalLine(x,otherX, y, color);
+					drawHorizontalLine(x,otherX, y + 1, color);
+				}
+				if((otherX > this.x && x < this.x + scWidth)||(otherX < this.x + scWidth && x > this.x)){
+					drawVerticalLine(otherX - 1, y, otherY, color);
+					drawVerticalLine(otherX, y, otherY, color);
+					drawVerticalLine(otherX + 1, y, otherY, color);
+				}
+				
+				//drawLine(x, y, otherX, otherY);
+			}
+		}
+		GL11.glPopMatrix();
+	}
+	
+	
+	//problem with coloring
+	public void drawLine(int xStart, int yStart, int xEnd, int yEnd){
+		Tessellator tes = Tessellator.instance;
+		tes.startDrawing(GL11.GL_LINES);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		tes.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
+		tes.addVertex(xStart - 1, yStart, 1);
+		tes.addVertex(xStart, yStart, 1);
+		tes.addVertex(xStart + 1, yStart, 1);
+		tes.addVertex(xEnd, yEnd, 1);
+		tes.draw();
 	}
 	
 
