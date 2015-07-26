@@ -1,16 +1,11 @@
 package com.invizzble.SC.client.interfaces;
 
-import java.awt.Color;
-import java.awt.List;
 import java.util.ArrayList;
-
-import javax.vecmath.Vector2f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.shader.TesselatorVertexState;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
@@ -20,9 +15,6 @@ import com.invizzble.SC.lib.Info;
 import com.invizzble.SC.research.ModResearch;
 import com.invizzble.SC.research.PageResearch;
 import com.invizzble.SC.research.Research;
-import com.invizzble.SC.research.ResearchTest;
-
-import cpw.mods.fml.client.config.HoverChecker;
 
 public class GuiSciPad extends GuiScreen{
     /**
@@ -198,94 +190,97 @@ public class GuiSciPad extends GuiScreen{
 			int x = this.x + scWidth/2 - (int)((focusX - 64 -research.getPageX() - 4) * pageScaleWidth);
 			int y = this.y + scHeight/2 - (int)((focusY - 32 - research.getPageY() - 4)* pageScaleHeight);
 			for(Research required:research.getRequiredResearch()){
-				int otherX = this.x + scWidth/2 - (int)((focusX - 64 -required.getPageX() - 4) * pageScaleWidth);
-				int otherY = this.y + scHeight/2 - (int)((focusY - 32 - required.getPageY() - 4)* pageScaleHeight);
-				int width;
-				int height;
-				
-				if(x > otherX){
-					width = research.getPageX() - required.getPageX();
-				}else{
-					width = required.getPageX() - research.getPageX();
-				}
-				if(y > otherY){
-					height = research.getPageY() - required.getPageY();
-				}else{
-					height = required.getPageY() - research.getPageY();
-				}
-				
-				//Using thales to keep the line straight if it's past the borders! adjustement = (overflow/(width or height)*(width or height)
-				if(x < this.x){
-					try{
-						y  += (int)((float)(Math.abs(x - this.x ))/width * height);
-					}catch(ArithmeticException e){
-						
-					}
-					x = this.x;
-				}
-				
-				if(x > this.x + scWidth){
-					try{
-						y  -= (int)((float)(Math.abs(x -(this.x + scWidth)))/width * height);
-					}catch(ArithmeticException e){
-						
-					}
-					x = this.x+scWidth;
-				}
-				
-				if(otherX > this.x + scWidth){
-					try{
-						otherY  -= (int)(float)(Math.abs(otherX-(this.x + scWidth))/width * height);
-					}catch(ArithmeticException e){
-						
-					}
-					otherX = this.x+scWidth;
-				}
-				
-				if(otherX < this.x){
-					try{
-					otherY  += (int)((float)(Math.abs(otherX - this.x))/width * height);				
-					}catch(ArithmeticException e){
-						
-					}
-					otherX = this.x;
-				}
-				
-				if(otherY < this.y){
-					try{
-						otherX  += (int)((float)(Math.abs(otherY - this.y))/ height * width);
-					}catch(ArithmeticException e){
-						
-					}
-					otherY = this.y;
-				}
-				
-				if(y < this.y){
-					try{
-						x  += (int)((float)(Math.abs(y - this.y))/ height * width);
-					}catch(ArithmeticException e){
-						
-					}
-					y = this.y;
-				}
-				
-				if(otherY > this.y + scHeight){
+				if(required.getResearchPage().equals(research.getResearchPage())){
+					int otherX = this.x + scWidth/2 - (int)((focusX - 64 -required.getPageX() - 4) * pageScaleWidth);
+					int otherY = this.y + scHeight/2 - (int)((focusY - 32 - required.getPageY() - 4)* pageScaleHeight);
+					int width;
+					int height;
 					
-					otherY = this.y+scHeight;
+					if(x > otherX){
+						width = research.getPageX() - required.getPageX();
+					}else{
+						width = required.getPageX() - research.getPageX();
+					}
+					if(y > otherY){
+						height = research.getPageY() - required.getPageY();
+					}else{
+						height = required.getPageY() - research.getPageY();
+					}
+					
+					//Using thales to keep the line straight if it's past the borders! adjustement = (overflow/(width or height)*(width or height)
+					if(x < this.x){
+						try{
+							y  += (int)((float)(Math.abs(x - this.x ))/width * height);
+						}catch(ArithmeticException e){
+							
+						}
+						x = this.x;
+					}
+					
+					if(x > this.x + scWidth){
+						try{
+							y  -= (int)((float)(Math.abs(x -(this.x + scWidth)))/width * height);
+						}catch(ArithmeticException e){
+							
+						}
+						x = this.x+scWidth;
+					}
+					
+					if(otherX > this.x + scWidth){
+						try{
+							otherY  -= (int)(float)(Math.abs(otherX-(this.x + scWidth))/width * height);
+						}catch(ArithmeticException e){
+							
+						}
+						otherX = this.x+scWidth;
+					}
+					
+					if(otherX < this.x){
+						try{
+						otherY  += (int)((float)(Math.abs(otherX - this.x))/width * height);				
+						}catch(ArithmeticException e){
+							
+						}
+						otherX = this.x;
+					}
+					
+					if(otherY < this.y){
+						try{
+							otherX  += (int)((float)(Math.abs(otherY - this.y))/ height * width);
+						}catch(ArithmeticException e){
+							
+						}
+						otherY = this.y;
+					}
+					
+					if(y < this.y){
+						try{
+							x  += (int)((float)(Math.abs(y - this.y))/ height * width);
+						}catch(ArithmeticException e){
+							
+						}
+						y = this.y;
+					}
+					
+					if(otherY > this.y + scHeight){
+						
+						otherY = this.y+scHeight;
+					}
+					
+					if(y > this.y+scHeight){
+						x  -= (int)((float)(Math.abs(y - (this.y + scHeight)))/ height * width);
+						y = this.y+scHeight;
+					}
+					
+					//color = (alpha)(red)(green)(blue)
+					int color = 0xFFD9D9D9;
+					
+					drawLine(x, y, otherX, otherY, color);
 				}
-				
-				if(y > this.y+scHeight){
-					x  -= (int)((float)(Math.abs(y - (this.y + scHeight)))/ height * width);
-					y = this.y+scHeight;
-				}
-				
-				//color = (alpha)(red)(green)(blue)
-				int color = 0xFFD9D9D9;
-				
-				drawLine(x, y, otherX, otherY, color);
 			}
 		}
 		GL11.glPopMatrix();
+		
 	}
 	
 	

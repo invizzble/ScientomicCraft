@@ -1,8 +1,14 @@
 package com.invizzble.SC.research;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+
+import com.invizzble.SC.handler.ConfigurationHandler;
 
 public class Research {
 	
@@ -19,9 +25,22 @@ public class Research {
 	
 	Research[] required = {};
 	
-	public Research(){
+	PageResearch page;
+	
+	public Research(String name){
+		this.name = name;
+		discovered = isDiscoveredFromConfig();
 	}
 
+	public Research(String name, boolean defaultDiscovered){
+		this.name = name;
+		if(defaultDiscovered){
+			discovered = true;
+		}else{
+			discovered = isDiscoveredFromConfig();
+		}
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -38,10 +57,15 @@ public class Research {
 	public void setDiscovered(boolean discovered){
 		this.discovered = discovered;
 	}
+	
+	public boolean isDiscoveredFromConfig(){
+		return ConfigurationHandler.getResearchState(name);
+	}
 
 	public void discover(){
 		onDiscover();
 		discovered = true;
+		ConfigurationHandler.setResearchState(name, discovered);
 	}
 	
 	public boolean canDiscover(){
@@ -75,6 +99,10 @@ public class Research {
 		setIcon(new ItemStack(item).getIconIndex());
 	}
 	
+	public void setIcon(Block block){
+		setIcon(Item.getItemFromBlock(block));
+	}
+	
 	public void setRequiredResearch(Research... required){
 		this.required = required;
 	}
@@ -85,6 +113,11 @@ public class Research {
 	
 	public void setResearchPage(PageResearch page){
 		page.addResearchToList(this);
+		this.page = page;
+	}
+	
+	public PageResearch getResearchPage(){
+		return page;
 	}
 
 	public int getPageX() {

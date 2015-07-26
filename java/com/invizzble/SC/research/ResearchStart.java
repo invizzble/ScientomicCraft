@@ -5,11 +5,10 @@ import com.invizzble.SC.item.ModItems;
 public class ResearchStart extends Research{
 	
 	public ResearchStart(){
-		setName("start");
+		super("start", true);
 		setDesciption("test");
 		setResearchPage(ModResearch.basic);
 		setIcon(ModItems.SciPad);
-		setDiscovered(true);
 		setCords(0, 0);
 	}
 

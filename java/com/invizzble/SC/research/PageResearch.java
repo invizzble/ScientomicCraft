@@ -2,6 +2,8 @@ package com.invizzble.SC.research;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -35,6 +37,10 @@ public class PageResearch {
 	
 	public void setIcon(Item item){
 		setIcon(new ItemStack(item).getIconIndex());
+	}
+	
+	public void setIcon(Block block){
+		setIcon(Item.getItemFromBlock(block));
 	}
 
 	public void addResearchToList(Research research){

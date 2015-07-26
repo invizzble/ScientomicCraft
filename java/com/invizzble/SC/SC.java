@@ -1,5 +1,7 @@
 package com.invizzble.SC;
 
+import net.minecraftforge.common.config.Configuration;
+
 import com.invizzble.SC.block.ModBlocks;
 import com.invizzble.SC.handler.ConfigurationHandler;
 import com.invizzble.SC.handler.FuelHandler;
@@ -51,7 +53,7 @@ public class SC {
 	
 	@Instance(Info.MOD_ID)
 	public static SC instance;
-	
+		
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		

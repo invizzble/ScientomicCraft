@@ -1,6 +1,7 @@
 package com.invizzble.SC.proxies;
 
 import net.minecraft.block.Block;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 import com.invizzble.SC.block.ModBlocks;
 import com.invizzble.SC.client.renderer.InventoryMachineRenderer;
